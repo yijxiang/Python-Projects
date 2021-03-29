@@ -1,0 +1,20 @@
+default:
+    image: 'pzharyuk2017/gitlab-cicd:latest'                # priel/devnet-nxos-bootcamp-runner:0.1.0
+    before_script:
+    - export VAULT_ADDR=$VAULT_URL
+    - vault status -tls-skip-verify
+    #   - pip install -r ./requirements.txt
+Netbox_OpenGear_Creation:
+    script:
+      - export VAULT_TOKEN="$(vault write -tls-skip-verify -field=token auth/jwt/login role=sync-lighthouse jwt=$CI_JOB_JWT)"
+      - export pw="$(vault kv get -tls-skip-verify -field=pw luylaki/ad)" 
+      - export un="$(vault kv get -tls-skip-verify -field=un luylaki/ad)"
+      - export nb_token="$(vault kv get -tls-skip-verify -field=nb_token luylaki/netbox)"
+      - export nb_url="$(vault kv get -tls-skip-verify -field=nb_url luylaki/netbox)"
+      - export lh_nodes="$(vault kv get -tls-skip-verify -field=lighthouse_url_nodes luylaki/lighthouse)"
+      - export lh_sessions="$(vault kv get -tls-skip-verify -field=lighthouse_url_sessions luylaki/lighthouse)"
+      - python3 nb_create_ts_v4.py --un=$un --pw=$pw --nb_token=$nb_token --nb_url=$nb_url --lh_nodes=$lh_nodes --lh_sessions=$lh_sessions
+      #- ansible-playbook vlan_fabricpath.yml --extra-vars "ansible_user=$nxos_user ansible_password=$nxos_password"
+    artifacts:
+      paths:
+        - terminal_servers.log

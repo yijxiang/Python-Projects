@@ -1,0 +1,44 @@
+Value TRANSMIT_POWER_MODE (.+?)
+Value TRANSMIT_POWER_UPDATE_INTERVAL (.+?)
+Value TRANSMIT_POWER_THRESHOLD (.+?)
+Value TRANSMIT_POWER_NEIGHBOR_COUNT (.+?)
+Value WLAN_AWARE_TPC (.+?)
+Value MIN_TRANSMIT_POWER (.+?)
+Value MAX_TRANSMIT_POWER (.+?)
+Value NOISE (.+?)
+Value INTERFERENCE (.+?)
+Value LOAD (.+?)
+Value DEVICE_AWARE (.+?)
+Value TRANSMIT_POWER_LEADER (.+?)
+Value LAST_RUN (.+?)
+Value LAST_RUN_TIME (.+?)
+Value TPC_MODE (.+?)
+Value AP_NAME (.+?)
+Value CHANNEL (.+?)
+Value TXPOWER (.+?\s.+)
+Value ALLOWED_POWER_LEVELS (.+?)
+
+Start
+  ^Leader\s+Automatic\s+Transmit\s+Power\s+Assignment\s*$$
+  ^Transmit\s+Power\s+Assignment\s+Mode\.*\s+${TRANSMIT_POWER_MODE}\s*$$
+  ^Transmit\s+Power\s+Update\s+Interval\.*\s+${TRANSMIT_POWER_UPDATE_INTERVAL}\s*$$
+  ^Transmit\s+Power\s+Threshold\.*\s+${TRANSMIT_POWER_THRESHOLD}\s*$$
+  ^Transmit\s+Power\s+Neighbor\s+Count\.*\s+${TRANSMIT_POWER_NEIGHBOR_COUNT}\s*$$
+  ^WLAN\s+Aware\s+TPC\.*\s+${WLAN_AWARE_TPC}\s*$$
+  ^Min\s+Transmit\s+Power\.*\s+${MIN_TRANSMIT_POWER}\s*$$
+  ^Max\s+Transmit\s+Power\.*\s+${MAX_TRANSMIT_POWER}\s*$$
+  ^Noise\.*\s+${NOISE}\s*$$
+  ^Interference\.*\s+${INTERFERENCE}\s*$$
+  ^Load\.*\s+${LOAD}\s*$$
+  ^Device\s+Aware\.*\s+${DEVICE_AWARE}\s*$$
+  ^Transmit\s+Power\s+Assignment\s+Leader\.*\s+${TRANSMIT_POWER_LEADER}\s*$$
+  ^Last\s+Run\.*\s+${LAST_RUN}\s*$$
+  ^Last\s+Run\s+Time\.*\s+${LAST_RUN_TIME}\s*$$
+  ^TPC\s+Mode\.*\s+${TPC_MODE}\s*$$
+  ^\s*
+  ^${AP_NAME}\s+${CHANNEL}\s+${TXPOWER}\s+${ALLOWED_POWER_LEVELS}\s*$$ -> Record
+  ^.+\.+
+  ^\s*$$
+  ^AP\s+Name\s+Channel\s+TxPower\s+Allowed\s+Power\s+Levels\s*$$
+  ^-+
+  ^.*

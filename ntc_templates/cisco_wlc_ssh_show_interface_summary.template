@@ -1,0 +1,15 @@
+Value INTERFACE_NAME (\S+)
+Value PORT (\S+)
+Value VLAN_ID (\S+)
+Value IP_ADDRESS ([a-fA-F0-9:\.]+)
+Value TYPE (\S+)
+Value AP_MGR (\S+)
+Value GUEST (\S+)
+
+Start
+  ^${INTERFACE_NAME}\s+${PORT}\s+${VLAN_ID}\s+${IP_ADDRESS}\s+${TYPE}\s+${AP_MGR}\s+${GUEST}\s*$$ -> Record
+  ^.+\.+
+  ^\s*$$
+  ^Interface\s+Name\s+Port\s+Vlan\s+Id\s+IP\s+Address\s+Type\s+AP\s+Mgr\s+Guest\s*$$
+  ^-+
+  ^.*

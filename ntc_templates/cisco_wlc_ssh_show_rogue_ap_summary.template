@@ -1,0 +1,20 @@
+Value MAC_ADDRESS ([a-fA-F0-9:\.]+)
+Value CLASS (\w+)
+Value STATE (\w+)
+Value DET_APS ([0-9]+)
+Value ROGUE_CLIENTS ([0-9]+)
+Value HIGHEST_RSSI_DET_AP ([a-fA-F0-9:]+)
+Value RSSI_ONE (-\d+)
+Value CHANNEL_ONE (\S+)
+Value SECOND_HIGHEST_RSSI_DET_AP ([a-fA-F0-9:]+)
+Value RSSI_TWO (-\d+)
+Value CHANNEL_TWO (\S+)
+
+
+Start
+  ^${MAC_ADDRESS}\s+${CLASS}\s+${STATE}\s+${DET_APS}\s+${ROGUE_CLIENTS}\s+${HIGHEST_RSSI_DET_AP}\s+${RSSI_ONE}\s+${CHANNEL_ONE}\s+${SECOND_HIGHEST_RSSI_DET_AP}\s+${RSSI_TWO}\s+${CHANNEL_TWO}\s*$$ -> Record
+  ^.+\.+
+  ^\s*$$
+  ^MAC\s+Address\s+Class\s+State\s+#Det\s+Aps\s+#Rogue\s+Clients\s+Highest\s+RSSI\s+det-Ap\s+#RSSI\s+#Channel\s+Second\s+Highest\s+RSSI\s+Det-Ap\s+#RSSI\s+#Channel\s*$$
+  ^-+
+  ^. 

@@ -1,0 +1,16 @@
+Value AP_NAME (\S+) 
+Value MAC_ADDRESS ([a-fA-F0-9:]+)
+Value SLOT (\d)
+Value ADMIN (\w+)
+Value OPER (\w+)
+Value CHANNEL (\S+)
+Value TXPOWER (\S+\s\S+\s\S+)
+
+
+Start
+  ^${AP_NAME}\s+${MAC_ADDRESS}\s+${SLOT}\s+${ADMIN}\s+${OPER}\s+${CHANNEL}\s+${TXPOWER}\s*$$ -> Record
+  ^.+\.+
+  ^\s*$$
+  ^AP\s+Name\s+MAC\s+Address\s+Slot\s+Admin\s+Oper\s+Channel\s+TxPower\s*$$
+  ^-+
+  ^. 

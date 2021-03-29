@@ -1,0 +1,13 @@
+Value AP_NAME (\S+)
+Value CHANNEL (\S+)
+Value TXPOWER (\S+\s.+)
+Value ALLOWED_POWER_LEVELS (\[.*])
+
+
+Start
+  ^${AP_NAME}\s+${CHANNEL}\s+${TXPOWER}\s+${ALLOWED_POWER_LEVELS}\s*$$ -> Record
+  ^.+\.+
+  ^\s*$$
+  ^AP\s+Name\s+Channel\s+TxPower\s+Allowed\s+Power\s+Levels\s*$$
+  ^-+
+  ^.*

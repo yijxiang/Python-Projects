@@ -1,0 +1,9 @@
+Value NAME (\S+)
+Value DESCRIPTION (.*)
+Value PID (\S+-\S+-\S+)
+Value VID (\S+)
+Value SN (.*)
+
+Start
+  ^NAME:\s*"${NAME}",\s*DESCR:\s*"${DESCRIPTION}"\s*$$
+  ^PID:\s+${PID},\s+VID:\s+${VID},\s+SN:\s+${SN}

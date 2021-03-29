@@ -1,0 +1,50 @@
+Value ASSIGN_MODE (\w+)
+Value UPDATE_TIME (\d+\s\w+)
+Value ANCHOR_TIME (\d+)
+Value NOISE (\w+)
+Value INTERFER (\w+)
+Value LOAD (\w+)
+Value DEVICE_AWARE (\w+)
+Value CLEANAIR_DRIVEN (\w+)
+Value LEADER (WLC\w+-\d\d)
+Value DCA_SENSITIVITY (\w+ \(\d+ dB\))
+Value DCA_WIDTH (\d+ \w+)
+Value DCA_MIN (-\d+ dBm)
+Value List DCA_CHANNELS ([\d+,?]*)
+Value List UNUSED_DCA_CHANNELS ([\d+\W+?]*)
+
+Start
+  ^\s*Leader\sAutomatic\sChannel\sAssignment*$$
+  ^\s+Channel\sAssignment\sMode\.*\s${ASSIGN_MODE}s*$$
+  ^\s+Channel\sUpdate\sInterval\.*\s${UPDATE_TIME}s*$$
+  ^\s+Anchor\stime\s\(Hour\sof\sthe\sday\)\.*\s+${ANCHOR_TIME}\s+s*$$
+  ^\s+Update\sContributions*$$
+  ^\s+Noise\.*\s${NOISE}s*$$
+  ^\s+Interference\.*\s${INTERFER}s*$$
+  ^\s+Load\.*\s${LOAD}s*$$
+  ^\s+Device\sAware\.*\s${DEVICE_AWARE}s*$$
+  ^\s+CleanAir\sEvent-driven\sRRM\soption\.*\s${CLEANAIR_DRIVEN}s*$$
+  ^\s+Channel\sAssignment\sLeader\.*\s+${LEADER}\s+\(([\d1-9]+\.?){4}\)\s+\(\:\:\)s*$$
+  ^\s+Last\s+Run\.*\s+\d+\s+seconds\s+ago\s*$$
+  ^\s+Last\s+Run\s+Time\.*\s+\d+\s+secondss*$$
+  ^\s+DCA\sSensitivity\sLevel\:?\s?\.*\s${DCA_SENSITIVITY}s*$$
+  ^\s+DCA\s\S+\sChannel\sWidth\.*\s${DCA_WIDTH}s*$$
+  ^\s+DCA\sMinimum\sEnergy\sLimit\.*\s${DCA_MIN}s*$$
+  ^\s+Channel\sEnergy\sLevels
+  ^\s+Minimum\.*\s+\w+$$
+  ^\s+Average\.*\s+\w+$$
+  ^\s+Maximum\.*\s+\w+$$
+  ^\s+802\.11a\s+5\s+GHz\sAuto\-RF\s+Channel\s+List\s*$$ -> Channels
+  ^.*Allowed\sChannel\sList\.*
+  ^.*Unused\sChannel\sList\.*
+  ^\s+\d+,?
+  #^\s+DCA\sOutdoor\sAP\soption
+  #^\s*$$
+  #^. -> Error
+
+Channels
+  ^\s+Allowed\s+Channel\s+List\.*\s+${DCA_CHANNELS}\s*$$
+  ^\s+${DCA_CHANNELS}\s*$$
+  ^\s+Unused\s+Channel\s+List\.*\s+${UNUSED_DCA_CHANNELS}\s*$$ -> Start
+  ^\s+${UNUSED_DCA_CHANNELS}\s*$$
+  ^\s+802.11a\s+4.9\s+GHz\s+Auto\-RF\s+Channel\s+List\s*$$

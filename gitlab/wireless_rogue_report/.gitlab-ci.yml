@@ -1,0 +1,25 @@
+default:
+    image: 'pzharyuk2017/gitlab-cicd:latest' 
+    before_script:
+    - export VAULT_ADDR=$VAULT_URL
+    - vault status -tls-skip-verify
+    - mkdir custom_ntc
+    - mkdir rogue_files
+    - cp index custom_ntc/index
+    - cp cisco* custom_ntc/
+    # - pip3 install hvac  --  Must use proxy to install packages on prod gitlab :-(
+    # - pip install -r ./requirements.txt
+Rogue_Wireless_Report:
+    script:
+      - export VAULT_TOKEN="$(vault write -tls-skip-verify -field=token auth/jwt/login role=wireless-rogues jwt=$CI_JOB_JWT)"
+      - export pw="$(vault kv get -tls-skip-verify -field=pw luylaki/ad)" 
+      - export un="$(vault kv get -tls-skip-verify -field=un luylaki/ad)"
+      - export nb_token="$(vault kv get -tls-skip-verify -field=nb_token luylaki/netbox)"
+      - export nb_url="$(vault kv get -tls-skip-verify -field=nb_url luylaki/netbox)"
+      - export NET_TEXTFSM="./custom_ntc"
+      - python3 wlc_rogue_detailed_v5.py --un=$un --pw=$pw --nb_token=$nb_token --nb_url=$nb_url
+
+    artifacts:
+      paths:
+        - wlc_rogue_detailed.log
+        - "./rogue_files/*"

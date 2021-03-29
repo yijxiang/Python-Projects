@@ -1,0 +1,15 @@
+Value NAME (.+?)
+Value MAC_ADDRESS (.+?)
+Value IP_ADDRESS (.+?)
+Value IP_NETMASK (.+?)
+Value IP_GATEWAY (.+?)
+
+Start
+  ^Interface\s+Name\.*\s+${NAME}\s*$$
+  ^MAC\s+Address\.*\s+${MAC_ADDRESS}\s*$$
+  ^IP\s+Address\.*\s+${IP_ADDRESS}\s*$$
+  ^IP\s+Netmask\.*\s+${IP_NETMASK}\s*$$
+  ^IP\s+Gateway\.*\s+${IP_GATEWAY}\s*$$
+  ^.+\.+
+  ^-+
+  ^.

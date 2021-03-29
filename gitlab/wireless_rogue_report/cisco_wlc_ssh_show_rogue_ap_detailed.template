@@ -1,0 +1,42 @@
+Value Filldown ROGUE_BSSID ([a-fA-F0-9:]+)
+#Value Filldown ON_WIRE (\w+)
+#Value Filldown CLASSIFICATION (\w+)
+#Value Filldown CONTAINED (\w+)
+#Value Filldown STATE (\w+)
+Value Filldown FIRST_SEEN (.+?)
+Value Filldown LAST_SEEN (.+?)
+#Value REPORTING_AP (\d+?)
+Value MAC_ADDRESS (\S+)
+Value REPORTING_AP_NAME (\S+-\d-\d+)
+Value RADIO_TYPE (802\.\S*)
+Value SSID (.+?)
+Value CHANNEL (.+)
+Value RSSI (-.+)
+Value SNR (\d+\sdB)
+Value SECURITY_POLICY (.+?)
+Value SHORT_PREAMBLE (\w+)
+Value LAST_REPORTED (.+?)
+
+Start
+  ^Rogue\s+BSSID\.*\s+${ROGUE_BSSID}\s*$$ 
+#  ^Is\s+Rogue\s+on\s+Wired\s+Network\.*\s+${ON_WIRE}\s*$$ 
+#  ^Classification\.*\s+${CLASSIFICATION}\s*$$ 
+#  ^Manual\s+Contained\.*\s+${CONTAINED}\s*$$ 
+#  ^State\.*\s+${STATE}\s*$$ 
+  ^First\s+Time\s+Rogue\s+was\s+Reported\.*\s+${FIRST_SEEN}\s*$$ 
+  ^Last\s+Time\s+Rogue\s+was\s+Reported\.*\s+${LAST_SEEN}\s*$$ 
+#  ^Reported\s+By\s*
+#  ^\s+AP\s+\d+\s*
+#
+#Start
+  ^\s+AP\s+\d+\s*$$ -> Record
+  ^\s+MAC\s+Address\.*\s+${MAC_ADDRESS}\s*$$
+  ^\s+Name\.*\s+${REPORTING_AP_NAME}\s*$$
+  ^\s+Radio\s+Type\.*\s+${RADIO_TYPE}\s*$$
+  ^\s+SSID\.*\s+${SSID}\s*$$
+  ^\s+Channel\.*\s+${CHANNEL}\s*$$
+  ^\s+RSSI\.*\s+${RSSI}\s*$$
+  ^\s+SNR\.*\s+${SNR}\s*$$
+  ^\s+Security\s+Policy\.*\s+${SECURITY_POLICY}\s*$$
+  ^\s+ShortPreamble\.*\s+${SHORT_PREAMBLE}\s*$$
+  ^\s+Last\s+reported\s+by\s+this\s+AP\.*\s+${LAST_REPORTED}\s*$$
