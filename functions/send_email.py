@@ -7,7 +7,7 @@ from email import encoders
 def send_email(sender, to, cc, subject, body, body_format, file_path, file_list):
     """
     From, To and Cc need to be a comma separated string
-    i.e 'username1@daimler.com, username2@daimler.com'
+    i.e 'username1@email.com, username2@email.com'
     Attachment variable needs to include relative path to file
     Body can be plain text or html. Format accordingly and match body_format variable
     Cc, filepath, file_list can be blank i.e. Cc=''
@@ -43,9 +43,9 @@ USAGE EXAMPLE:
 
 from send_email import send_email
 
-sender='FIRST.LAST@daimler.com'
-to='FIRST.LAST@daimler.com'      #i.e 'FIRST.LAST@daimler.com, FIRST.LAST@daimler.com'
-cc=''                            #'FIRST.LAST@daimler.com, FIRST.LAST@daimler.com'
+sender='FIRST.LAST@email.com'
+to='FIRST.LAST@email.com'      #i.e 'FIRST.LAST@email.com, FIRST.LAST@email.com'
+cc=''                            #'FIRST.LAST@email.com, FIRST.LAST@email.com'
 subject='Test'                   #EMAIL SUBJECT
 body='test'                      #EMAIL BODY TEXT
 body_format='plain'              #OR USE 'html'
