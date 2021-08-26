@@ -1,0 +1,23 @@
+stages:
+  - Synchronize
+
+default:
+    image:  'luylaki/fmg:6.4.5' 
+    before_script:
+    - export VAULT_ADDR=$VAULT_URL
+    - vault status -tls-skip-verify
+
+Sync-FortiManager-To-Netbox:
+    stage: Synchronize
+    script:
+      - export VAULT_TOKEN="$(vault write -tls-skip-verify -field=token auth/jwt/login role=sync-firewalls jwt=$CI_JOB_JWT)"
+      - export prd_fmg_host="$(vault kv get -tls-skip-verify -field=prd_fmg_host un/firewalls)"
+      - export prd_fmg_pw="$(vault kv get -tls-skip-verify -field=prd_fmg_pw un/firewalls)"
+      - export prd_fmg_un="$(vault kv get -tls-skip-verify -field=prd_fmg_un un/firewalls)"
+      - export nb_token="$(vault kv get -tls-skip-verify -field=nb_token un/netbox)"
+      - export nb_url="$(vault kv get -tls-skip-verify -field=nb_url un/netbox)"
+      - python3 sync_fg_firewalls_to_netbox_v2.py --prd_fmg_un=$prd_fmg_un --prd_fmg_pw=$prd_fmg_pw --prd_fmg_host=$prd_fmg_host --nb_token=$nb_token --nb_url=$nb_url
+
+    artifacts:
+      paths:
+        - firewall.log
