@@ -1,4 +1,3 @@
-#todo test on wlcmprk9-labg-01
 import pynetbox, requests, logging, netmiko, sys
 from tqdm import tqdm
 from secrets import nb_token, nb_url, un, pw
